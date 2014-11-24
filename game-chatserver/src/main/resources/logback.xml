@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration debug="true" scan="true" scanPeriod="10 seconds">
+
+	<contextListener class="ch.qos.logback.classic.jul.LevelChangePropagator">
+		<resetJUL>false</resetJUL>
+	</contextListener>
+
+	<appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+		<target>System.out</target>
+		<encoder charset="UTF-8">
+			<pattern>%X{req.client} - %X{req.user} - %marker%n%date [%-5level] %logger{30} - %msg%n</pattern>
+		</encoder>
+	</appender>
+
+	<appender name="file" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>/tmp/log/%d{yyyy-MM-dd}.log</fileNamePattern>
+			<maxHistory>30</maxHistory>
+		</rollingPolicy>
+		<encoder charset="UTF-8">
+			<pattern>%X{req.client} - %X{req.user} - %marker%n%date [%-5level] %logger{30} - %msg%n</pattern>
+		</encoder>
+	</appender>
+	
+	<root level="warn">
+		<appender-ref ref="console" />
+	</root>
+	<logger name="chatserver" additivity="false" level="debug">
+		<appender-ref ref="console" />
+	</logger>
+
+</configuration>
